@@ -14,15 +14,21 @@ const BookModal = ({ book, isOpen, setIsOpen }: any) => {
                                 {book.name}
                             </DialogTitle>
                             <p className="mt-2 text-sm/6 text-black/90">
-                                Your payment has been successfully submitted. We’ve sent you an email with all of the details of your
-                                order.
+                                {book.description}
                             </p>
                             <div className="mt-4">
                                 <Button
                                     className="inline-flex items-center gap-2 rounded-md bg-gray-900 py-1.5 px-3 text-sm/6 font-semibold text-white shadow-inner shadow-white/10 focus:outline-none data-[hover]:bg-gray-600 data-[focus]:outline-1 data-[focus]:outline-white data-[open]:bg-gray-700"
                                     onClick={()=>setIsOpen(false)}
                                 >
-                                    Got it, thanks!
+                                    Request Checkout
+                                </Button>
+                                &nbsp;
+                                <Button
+                                    className="inline-flex items-center gap-2 rounded-md bg-gray-500 py-1.5 px-3 text-sm/6 font-semibold text-white shadow-inner shadow-white/10 focus:outline-none data-[hover]:bg-gray-600 data-[focus]:outline-1 data-[focus]:outline-white data-[open]:bg-gray-700"
+                                    onClick={()=>setIsOpen(false)}
+                                >
+                                    Cancel
                                 </Button>
                             </div>
                         </DialogPanel>

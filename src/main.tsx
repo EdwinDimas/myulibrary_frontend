@@ -26,7 +26,7 @@ createRoot(document.getElementById('root')!).render(
             <Route path="/add-users" element={<AddUsers />} />
             <Route path="/add-books" element={<AddBooks />} />
           </Route>
-          <Route path="/404-not-found" element={<NotFound />} />
+          <Route path="*" element={<NotFound />} />
         </Routes>
       </BrowserRouter>
     </Provider>

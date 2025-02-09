@@ -31,17 +31,17 @@ export const booksApi = createApi({
 
                 return `${path}/?${params.toString()}`;
             },
-            onQueryStarted: async (arg, { dispatch, queryFulfilled }) => {
-                try {
-                    const { data } = await queryFulfilled; // data returned from the query
-                    dispatch(setBooks(data)); // Dispatch action to update Redux store with the fetched data
-                } catch (error) {
-                    console.error("Error fetching filtered books:", error);
-                }
-            },
         }),
+        registerBook: builder.mutation<void, FormData>({
+            query: (book) => ({
+                url: 'books/create/',
+                method: 'POST',
+                body: book,
+            }),
+        }),
+
     }),
 });
 
-export const { useGetGenresQuery, useGetAuthorsQuery, useGetBooksQuery, useGetFilteredBooksQuery } = booksApi;
+export const { useGetGenresQuery, useGetAuthorsQuery, useGetBooksQuery, useGetFilteredBooksQuery, useRegisterBookMutation } = booksApi;
 export default booksApi;
