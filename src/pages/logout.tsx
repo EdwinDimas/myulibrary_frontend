@@ -1,23 +1,25 @@
 import { useEffect } from "react";
 import { useLogoutMutation } from "../store/endpoints/authApi"
-import { useNavigate } from "react-router";
+import { Navigate, useNavigate } from "react-router";
 import { resetStore } from "../store/actions/storeReset";
 import { useDispatch } from 'react-redux';
 
 
 const Logout = () => {
-    const [logout, { isSuccess }] = useLogoutMutation()
+    const [removeSession, { isLoading }] = useLogoutMutation()
     const navigate = useNavigate();
     const dispatch = useDispatch();
 
     useEffect(() => {
-        logout({})
+        removeSession({})
         dispatch(resetStore());
-        navigate('/');
+
     }, [] )
     
 
-    return <></>
+    return (
+        !isLoading ? <Navigate to={"/"} /> : "Closing session..."
+    )
 }
 
 export default Logout

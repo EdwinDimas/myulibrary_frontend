@@ -55,7 +55,7 @@ const NavBar = () => {
                                 Add books...
                             </a>
                             <div className="border-t my-2"></div> {/* Separador */}
-                            <a href="/request" className="flex items-center gap-2 py-2 px-4 hover:bg-gray-100 rounded-md">
+                            <a href="/book-request" className="flex items-center gap-2 py-2 px-4 hover:bg-gray-100 rounded-md">
                                 <FileText className="w-5 h-5 text-gray-700" />
                                 Book requests
                             </a>

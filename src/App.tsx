@@ -24,14 +24,14 @@ function App() {
     <BrowserRouter>
       <Routes>
         <Route element={<NavBar />}>
-          <Route path="/" element={<Homepage />} />
           <Route element={<ProtectedLayout />}>
+            <Route path="/" element={<Homepage />} />
             <Route path="/book-request" element={<BookRequest />} />
             <Route path="/add-users" element={<AddUsers />} />
             <Route path="/add-books" element={<AddBooks />} />
-            <Route path="/logout" element={<Logout />} />
           </Route>
         </Route>
+        <Route path="/logout" element={<Logout />} />
         <Route path="/login" element={<Login />} />
         <Route path="*" element={<NotFound />} />
       </Routes>
