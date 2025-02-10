@@ -1,11 +1,30 @@
 import React, { useState } from 'react';
-import { useGetRequestsQuery, useChangeRequestStatusMutation } from '../store/endpoints/requestsApi';
+import { useGetRequestsQuery, useChangeRequestStatusMutation, useMarkAsReturnedMutation } from '../store/endpoints/requestsApi';
+import withReactContent from 'sweetalert2-react-content';
+import Swal from 'sweetalert2';
 
 
 const RequestsTable: React.FC = () => {
   const { data: requests, error, isLoading } = useGetRequestsQuery({});
   const [changeRequestStatus] = useChangeRequestStatusMutation();
   const [statuses, setStatuses] = useState<{ [key: number]: string }>({}); // Estado individual para cada solicitud
+  const [markAsReturned] = useMarkAsReturnedMutation()
+  const MySwal = withReactContent(Swal);
+
+  const handleMarkAsReturned = (requestid:any) => {
+    MySwal.fire({
+      title: `¿Are you sure?, Make sure the book is already here.`,
+      showCancelButton: true,
+      confirmButtonText: "YES",
+    }).then(async (result) => {
+        if (result.isConfirmed) {
+
+          const result = await markAsReturned(requestid)
+          if(result?.data) Swal.fire("Info!", "The stock for this book has increased!", "success");
+          if(result?.error) Swal.fire("Error!", "Unexpected Error!", "error");
+        }
+    });
+  }
 
   const handleChangeStatus = async (requestId: number) => {
     const status = statuses[requestId];
@@ -14,13 +33,24 @@ const RequestsTable: React.FC = () => {
       return;
     }
 
-    try {
-      await changeRequestStatus({ requestId, newStatus: status });
-      console.log(`Request ${requestId} status changed to ${status}`);
-      // Aquí puedes hacer algo después de cambiar el estado, como actualizar el estado o mostrar un mensaje.
-    } catch (err) {
-      console.error('Error changing status:', err);
-    }
+    MySwal.fire({
+      title: `¿Are you sure?, You are about to change this book checkout status.`,
+      showCancelButton: true,
+      confirmButtonText: "YES",
+    }).then(async (result) => {
+        if (result.isConfirmed) {
+
+          const result = await changeRequestStatus({ requestId, newStatus: status });
+          if(result?.data) Swal.fire("Info!", "The status has been updated!", "success");
+          if(result?.error) Swal.fire("Error!", "Unexpected Error!", "error");
+        }
+    });
+
+
+
+      
+
+
   };
 
   const handleSelectChange = (e: React.ChangeEvent<HTMLSelectElement>, requestId: number) => {
@@ -70,8 +100,9 @@ const RequestsTable: React.FC = () => {
                {request.status_details[request.status_details.length - 1].status == "APPROVED" ? 
                 
                 <button
-                      onClick={() => handleChangeStatus(request.id)}
+                      onClick={() => handleMarkAsReturned(request.id)}
                       className="bg-green-900 text-white py-1 px-4 rounded ml-2"
+                      hidden = {request.status_details[request.status_details.length - 1].status == "RETURNED"}
                     >
                       Mark as returned
                 </button>

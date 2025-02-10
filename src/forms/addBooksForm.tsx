@@ -2,6 +2,9 @@ import React, { useState } from "react";
 import { Button, Input, Label, Select, Textarea, Image } from "./ui/formElements";
 import { useGetAuthorsQuery, useGetGenresQuery, useRegisterBookMutation } from "../store/endpoints/booksApi";
 import ImageUploadButton from "./ui/uploadImages";
+import withReactContent from "sweetalert2-react-content";
+import Swal from "sweetalert2";
+import { useNavigate } from "react-router";
 
 
 const AddBooksForm = () => {
@@ -18,10 +21,13 @@ const AddBooksForm = () => {
     const { data: authors = [] } = useGetAuthorsQuery({});
     const { data: genres = [] } = useGetGenresQuery({});
     const [registerBook, { isLoading }] = useRegisterBookMutation();
+    const MySwal = withReactContent(Swal);
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
         setFormData({ ...formData, [e.target.name]: e.target.value });
     };
+
+    const navigate = useNavigate();
 
     const handleFileUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
         const file = e.target.files?.[0];
@@ -32,18 +38,42 @@ const AddBooksForm = () => {
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
-        
-        const formDataToSend = new FormData();
-        formDataToSend.append("name", formData.name);
-        formDataToSend.append("genre", formData.genre);
-        formDataToSend.append("author", formData.author);
-        formDataToSend.append("description", formData.description);
-        formDataToSend.append("publishedYear", formData.publishedYear);
-        formDataToSend.append("stock", formData.stock);
-        if (formData.image) {
-            formDataToSend.append("image", formData.image);
-        }
-        await registerBook(formDataToSend);
+
+        MySwal.fire({
+            title: `¿Are you sure?, You are about register a new book.`,
+            showCancelButton: true,
+            confirmButtonText: "YES",
+        }).then(async (result) => {
+            if (result.isConfirmed) {
+
+                const formDataToSend = new FormData();
+                formDataToSend.append("name", formData.name);
+                formDataToSend.append("genre", formData.genre);
+                formDataToSend.append("author", formData.author);
+                formDataToSend.append("description", formData.description);
+                formDataToSend.append("publishedYear", formData.publishedYear);
+                formDataToSend.append("stock", formData.stock);
+                if (formData.image) {
+                    formDataToSend.append("image", formData.image);
+                }
+                const result = await registerBook(formDataToSend);
+
+                if (result?.data) {
+                    Swal.fire({
+                        title: "Info!",
+                        text: "The new book can now be requested by all the students!",
+                        icon: "success",
+                        timer: 3000, // Espera 3 segundos
+                        showConfirmButton: false,
+                      }).then(() => {
+                        navigate("/"); // Cambia "/somepage" por la ruta de destino
+                      });
+                }
+                if (result?.error) Swal.fire("Error!", "Unexpected Error!", "error");
+            }
+        });
+
+
     };
 
     return (

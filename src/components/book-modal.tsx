@@ -1,12 +1,28 @@
 import { Button, Dialog, DialogPanel, DialogTitle } from '@headlessui/react'
 import { useNewRequestMutation } from '../store/endpoints/booksApi'
+import Swal from "sweetalert2";
+import withReactContent from "sweetalert2-react-content";
 
 const BookModal = ({ book, isOpen, setIsOpen }: any) => {
 
-    const [newRequest, { isLoading }] = useNewRequestMutation()
+    const [newRequest] = useNewRequestMutation()
+    const MySwal = withReactContent(Swal);
+
 
     const handleNewRequest = (book: any) => {
-        newRequest(book.id)
+        MySwal.fire({
+            title: `¿Are you sure?, You are about to request this book.`,
+            showCancelButton: true,
+            confirmButtonText: "YES",
+          }).then(async (result) => {
+              if (result.isConfirmed) {
+                const result = await newRequest(book.id)
+                console.log(result)
+                if(result?.data) Swal.fire("Info!", "Your request has been saved, ask the librarian about it!", "success");
+                if(result?.error) Swal.fire("Error!", "Unexpected Error!", "error");
+              }
+          });
+        
     }
 
     return (

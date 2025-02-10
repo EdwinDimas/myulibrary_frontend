@@ -20,7 +20,15 @@ export const requestsApi = createApi({
       }),
       invalidatesTags: ['requests'],
     }),
+    markAsReturned: builder.mutation({
+      query: (data) => ({
+        url: 'requests/mark_as_returned/',  
+        method: 'POST',
+        body: {request_id:data}, 
+      }),
+      invalidatesTags: ['requests'],
+    }),
   }),
 });
 
-export const { useGetRequestsQuery, useChangeRequestStatusMutation } = requestsApi;
+export const { useGetRequestsQuery, useChangeRequestStatusMutation, useMarkAsReturnedMutation } = requestsApi;
