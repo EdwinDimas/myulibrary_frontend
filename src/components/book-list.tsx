@@ -8,7 +8,6 @@ const BookList = ({ books = [], error, isLoading  }:any) => {
 
     if(isLoading) return <p>Loading...</p>
     if(error) return <p>Error fetching data</p>
-    console.log({books})
 
     return (
         <div>

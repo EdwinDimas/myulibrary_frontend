@@ -1,5 +1,4 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
-import { setBooks } from "../slices/bookSlice";
 
 export const booksApi = createApi({
     reducerPath: "booksApi",
@@ -13,14 +12,6 @@ export const booksApi = createApi({
         }),
         getBooks: builder.query({
             query: () => "books/",
-            onQueryStarted: async (_, { dispatch, queryFulfilled }) => {
-                try {
-                    const { data } = await queryFulfilled;
-                    dispatch(setBooks(data)); // Actualiza el store con los libros obtenidos
-                } catch (error) {
-                    console.error("Error al obtener los libros:", error);
-                }
-            },
         }),
         getFilteredBooks: builder.query({
             query: (filters, path = "books/search") => {
