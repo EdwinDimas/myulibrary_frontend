@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Button, Input, Label, Select, Textarea, Image } from "./ui/formElements";
+import { Button, Input, Label, Select, Textarea } from "./ui/formElements";
 import { useGetAuthorsQuery, useGetGenresQuery, useRegisterBookMutation } from "../store/endpoints/booksApi";
 import ImageUploadButton from "./ui/uploadImages";
 import withReactContent from "sweetalert2-react-content";

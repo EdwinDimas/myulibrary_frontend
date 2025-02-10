@@ -1,7 +1,7 @@
 import { Link, Outlet } from "react-router"
-import { Disclosure, Popover, PopoverButton, PopoverPanel } from '@headlessui/react'
+import { Popover, PopoverButton, PopoverPanel } from '@headlessui/react'
 import Logo from '../assets/logo-min.png'
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { User, Book, FileText, LogOut, HomeIcon } from 'lucide-react';
 import { useEffect } from "react";
 import { useGetUserQuery } from "../store/endpoints/authApi";
