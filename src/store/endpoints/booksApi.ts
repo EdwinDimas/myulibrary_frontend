@@ -39,9 +39,23 @@ export const booksApi = createApi({
                 body: book,
             }),
         }),
+        registerUser: builder.mutation<void, FormData>({
+            query: (user) => ({
+                url: 'users/create/',
+                method: 'POST',
+                body: user,
+            }),
+        }),
 
     }),
 });
 
-export const { useGetGenresQuery, useGetAuthorsQuery, useGetBooksQuery, useGetFilteredBooksQuery, useRegisterBookMutation } = booksApi;
+export const { 
+    useGetGenresQuery, 
+    useGetAuthorsQuery, 
+    useGetBooksQuery, 
+    useGetFilteredBooksQuery, 
+    useRegisterBookMutation,
+    useRegisterUserMutation
+ } = booksApi;
 export default booksApi;
