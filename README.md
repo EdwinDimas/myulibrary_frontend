@@ -1,50 +1,39 @@
-# React + TypeScript + Vite
+**Solución local**
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+**1\. Clonar el repositorio**
 
-Currently, two official plugins are available:
+Para comenzar, es necesario clonar el repositorio del proyecto. Abrir tu terminal y ejecutra el siguiente comando:
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+**git clone** [**https://github.com/EdwinDimas/myulibrary_frontend.git**](https://github.com/EdwinDimas/myulibrary_frontend.git)
 
-## Expanding the ESLint configuration
+**2\. Acceder al directorio del proyecto**
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+Una vez clonado el repositorio, navega a la carpeta del proyecto:
 
-- Configure the top-level `parserOptions` property like this:
+**cd myulibrary_frontend**
 
-```js
-export default tseslint.config({
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
-```
+**3\. Instalar Node.js**
 
-- Replace `tseslint.configs.recommended` to `tseslint.configs.recommendedTypeChecked` or `tseslint.configs.strictTypeChecked`
-- Optionally add `...tseslint.configs.stylisticTypeChecked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and update the config:
+Vite requiere **Node.js**. Asegúrarse de tener **Node.js 22.0** o superior. Para verificar si ya se tiene Node.js instalado, ejecutar en un cmd o terminal:
 
-```js
-// eslint.config.js
-import react from 'eslint-plugin-react'
+**node**
 
-export default tseslint.config({
-  // Set the react version
-  settings: { react: { version: '18.3' } },
-  plugins: {
-    // Add the react plugin
-    react,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended rules
-    ...react.configs.recommended.rules,
-    ...react.configs['jsx-runtime'].rules,
-  },
-})
-```
+**4\. Instalar las dependencias del proyecto**
+
+Con Node.js instalado, necesitas instalar las dependencias del proyecto. Dentro del directorio del proyecto, ejecuta el siguiente comando:
+
+**npm install**
+
+Este comando instalará todas las dependencias definidas en el archivo **package.json**.
+
+**5\. Iniciar el servidor de desarrollo**
+
+Con las dependencias instaladas, ya es posible iniciar el servidor de desarrollo de Vite. Ejecutar el siguiente comando:
+
+**npm run dev**
+
+Este comando levantará la aplicación localmente y la pondrá disponible en su navegador.
+
+**6\. Acceder a la aplicación en el navegador**
+
+Por defecto, el servidor de desarrollo estará corriendo en **<http://localhost:5173>**.
